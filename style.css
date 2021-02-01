@@ -195,13 +195,13 @@ p {
 
 .theme-switch-wrapper span {
 	margin-right: 10px;
-	font-size: 1rem;
+	font-size: 0.8rem;
 }
 
 .toggle-text {
 	position: relative;
-	top: -4px;
-	right: 5px;
+	top: 0px;
+	right: 3px;
 	color: var(--on-background);
 }
 
@@ -255,6 +255,6 @@ input:checked + .slider::before {
 }
 
 .fas {
-	font-size: 30px;
+	font-size: 15px;
 	margin-right: 5px;
 }

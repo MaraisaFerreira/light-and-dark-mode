@@ -13,40 +13,41 @@ const imgMode = (mode) => {
 	image3.src = `img/verified_${mode}.svg`;
 };
 
-const changeAttribute = (textContent, classAdd, classRemove) => {
-	mainTitle.textContent = `Tema ${textContent}`;
-	toggleIcon.children[0].textContent = textContent;
-	toggleIcon.children[1].classList.replace(
-		`fa-${classRemove}`,
-		`fa-${classAdd}`
-	);
-};
-
-/* tema dark */
-const darkMode = () => {
-	nav.style.backgroundColor = 'rgb(0 0 0 / 50%)';
-	textBox.style.backgroundColor = 'rgb(255 255 255 / 50%)';
-	changeAttribute('Dark', 'moon', 'sun');
-	imgMode('dark');
-};
-
-/* tema light */
-const lightMode = () => {
-	nav.style.backgroundColor = 'rgb(255 255 255 / 50%)';
-	textBox.style.backgroundColor = 'rgb(0 0 0 / 50%)';
-	changeAttribute('Light', 'sun', 'moon');
-	imgMode('dark');
+const toggleDarkLightMode = (theme) => {
+	nav.style.backgroundColor =
+		theme === 'dark' ? 'rgb(0 0 0 / 50%)' : 'rgb(255 255 255 / 50%)';
+	textBox.style.backgroundColor =
+		theme === 'dark' ? 'rgb(255 255 255 / 50%)' : 'rgb(0 0 0 / 50%)';
+	mainTitle.textContent = theme === 'dark' ? 'Tema Dark' : 'Tema Light';
+	toggleIcon.children[0].textContent = theme === 'dark' ? 'Dark' : 'Light';
+	const remove = theme === 'dark' ? 'sun' : 'moon';
+	const add = theme === 'dark' ? 'moon' : 'sun';
+	toggleIcon.children[1].classList.replace(`fa-${remove}`, `fa-${add}`);
+	theme === 'dark' ? imgMode('dark') : imgMode('light');
 };
 
 const switchTheme = (event) => {
 	if (event.target.checked) {
 		document.documentElement.setAttribute('data-theme', 'dark');
-		darkMode();
+		localStorage.setItem('theme', 'dark');
+		toggleDarkLightMode('dark');
 	} else {
 		document.documentElement.setAttribute('data-theme', 'light');
-		lightMode();
+		localStorage.setItem('theme', 'light');
+		toggleDarkLightMode('light');
 	}
 };
 
 /* Event Listener*/
 toggleSwitch.addEventListener('change', switchTheme);
+
+/* Verifica se já tem o tema armazenado */
+const currentTheme = localStorage.getItem('theme');
+if (currentTheme) {
+	document.documentElement.setAttribute('data-theme', currentTheme);
+
+	if (currentTheme === 'dark') {
+		toggleSwitch.checked = true;
+		toggleDarkLightMode('dark');
+	}
+}
