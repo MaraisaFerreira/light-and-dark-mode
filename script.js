@@ -38,10 +38,8 @@ const switchTheme = (event) => {
 	}
 };
 
-/* Event Listener*/
 toggleSwitch.addEventListener('change', switchTheme);
 
-/* Verifica se já tem o tema armazenado */
 const currentTheme = localStorage.getItem('theme');
 if (currentTheme) {
 	document.documentElement.setAttribute('data-theme', currentTheme);
